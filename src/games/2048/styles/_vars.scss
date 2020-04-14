@@ -1,0 +1,22 @@
+$prefix: tf;
+
+$field-width: 500px;
+$grid-spacing: 15px;
+$grid-size: 4;
+$tile-size: ($field-width - $grid-spacing * ($grid-size + 1)) / $grid-size;
+$tile-border-radius: 3px;
+
+$mobile-threshold: $field-width + 20px;
+
+$text-color: #776e65;
+$bright-text-color: #f9f6f2;
+
+$tile-color: #eee4da;
+$tile-gold-color: #edc22e;
+$tile-gold-glow-color: lighten($tile-gold-color, 15%);
+
+$play-area-margin-top: 40px;
+$play-area-background: #bbada0;
+
+$transition-speed: 100ms;
+$animation-speed: 200ms;

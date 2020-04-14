@@ -1,0 +1,12 @@
+const actions = {
+  GAME_MOVE: 'GAME_MOVE',
+  // ADD_START_TILES: 'ADD_START_TILES',
+  // ADD_RANDOM_TILE: 'ADD_RANDOM_TILE',
+  // END_TURN: 'END_TURN',
+
+  START_GAME: 'START_GAME',
+  RESTART: 'RESTART',
+  END_GAME: 'END_GAME'
+};
+
+export { actions };

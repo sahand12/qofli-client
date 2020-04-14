@@ -1,0 +1,74 @@
+@import 'vars';
+
+@mixin board {
+  .tf-board {
+    margin-top: $play-area-margin-top;
+    position: relative;
+    padding: $grid-spacing;
+
+    cursor: default;
+    user-select: none;
+    touch-action: none;
+    -webkit-touch-callout: none;
+
+    background: $play-area-background;
+    border-radius: $tile-border-radius * 2;
+    width: $field-width;
+    height: $field-width;
+    box-sizing: border-box;
+  }
+  .tf-grid {
+    position: absolute;
+    z-index: 1;
+  }
+  .tf-grid__row {
+    margin-bottom: $grid-spacing;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &:after {
+      content: '';
+      display: block;
+      clear: both;
+    }
+  }
+  .tf-grid__cell {
+    width: $tile-size;
+    height: $tile-size;
+    margin-right: $grid-spacing;
+    float: left;
+    border-radius: $tile-border-radius;
+    background: rgba($tile-color, 0.35);
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .tf-tiles {
+    position: absolute;
+    z-index: 2;
+  }
+  .tf-tile {
+    &,
+    .tf-tile__inner {
+      width: ceil($tile-size);
+      height: ceil($tile-size);
+      line-height: ceil($tile-size);
+    }
+  }
+
+  // Build position classes
+  @for $y from 0 through $grid-size {
+    @for $x from 0 through $grid-size {
+      &.tf-tile--position-#{$x}-#{$y} {
+        transform: translateX(floor($tile-size + $grid-spacing) * $x)
+          translateY(floor($tile-size + $grid-spacing) * $y);
+      }
+    }
+  }
+}
+
+@include board;

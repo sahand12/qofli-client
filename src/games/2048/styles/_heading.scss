@@ -1,0 +1,66 @@
+.tf-heading {
+  //border: 1px solid greenyellow;
+  width: 100%;
+  min-width: 320px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+.tf-heading__title {
+  font-size: 80px;
+  font-weight: bold;
+  margin: 0;
+}
+.tf-scores {
+  display: flex;
+  align-items: baseline;
+}
+.tf-scores__current,
+.tf-scores__best {
+  $height: 25px;
+
+  height: $height;
+  margin-left: 8px;
+  margin-top: 8px;
+  padding: 15px 25px;
+  border-radius: 3px;
+  position: relative;
+  background: $play-area-background;
+  font-size: $height;
+  line-height: $height + 20px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+
+  &:after {
+    position: absolute;
+    width: 100%;
+    top: 8px;
+    left: 0;
+    text-transform: uppercase;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: center;
+    color: $tile-color;
+  }
+
+  .tf-scores__addition {
+    position: absolute;
+    right: 30px;
+    color: red;
+    font-size: $height;
+    line-height: $height;
+    font-weight: bold;
+    color: rgba($text-color, 0.9);
+    z-index: 100;
+    animation: move-up 600ms ease-in;
+    animation-fill-mode: both;
+  }
+}
+
+.tf-scores__current:after {
+  content: 'Score';
+}
+.tf-scores__best:after {
+  content: 'Best';
+}

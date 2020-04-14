@@ -1,0 +1,21 @@
+@import 'vars';
+@import 'animation';
+@import 'helpers';
+
+@import 'heading';
+@import 'tile';
+@import 'board';
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  background: #faf8ef;
+  color: $text-color;
+  font-family: 'Clear sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 18px;
+}
+
+body {
+  margin: 80px 0;
+}

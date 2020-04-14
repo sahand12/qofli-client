@@ -1,0 +1,130 @@
+@import 'helpers';
+@import 'vars';
+
+.tf-tile {
+  position: absolute; // Makes transforms relative to the top-left corner
+
+  .tf-tile__inner {
+    border-radius: $tile-border-radius;
+
+    background: $tile-color;
+    text-align: center;
+    font-weight: bold;
+    z-index: 10;
+
+    font-size: 55px;
+  }
+
+  // Movement transition
+
+  $base: 2;
+  $exponent: 1;
+  $limit: 11;
+
+  // Colors for all 11 states, false = no special color
+  $special-colors: false false,
+    // 2
+      false false,
+    // 4
+      #f78e48 true,
+    // 8
+      #fc5e2e true,
+    // 16
+      #ff3333 true,
+    // 32
+      #ff0000 true,
+    // 64
+      false true,
+    // 128
+      false true,
+    // 256
+      false true,
+    // 512
+      false true,
+    // 1024
+      false true; // 2048
+
+  // Build tile colors
+  @while $exponent <= $limit {
+    $power: pow($base, $exponent);
+
+    &.tf-tile--#{$power} .tf-tile__inner {
+      // Calculate base background color
+      $gold-percent: ($exponent - 1) / ($limit - 1) * 100;
+      $mixed-background: mix($tile-gold-color, $tile-color, $gold-percent);
+
+      $nth-color: nth($special-colors, $exponent);
+
+      $special-background: nth($nth-color, 1);
+      $bright-color: nth($nth-color, 2);
+
+      @if $special-background {
+        $mixed-background: mix($special-background, $mixed-background, 55%);
+      }
+
+      @if $bright-color {
+        color: $bright-text-color;
+      }
+
+      // Set background
+      background: $mixed-background;
+
+      // Add glow
+      $glow-opacity: max($exponent - 4, 0) / ($limit - 4);
+
+      //@if not $special-background {
+      //  box-shadow: 0 0 30px 10px rgba($tile-gold-glow-color, $glow-opacity / 1.8),
+      //    inset 0 0 0 1px rgba(white, $glow-opacity / 3);
+      //}
+
+      // Adjust font size for bigger numbers
+      @if $power >= 100 and $power < 1000 {
+        font-size: 45px;
+
+        // Media queries placed here to avoid carrying over the rest of the logic
+        @include smaller($mobile-threshold) {
+          font-size: 25px;
+        }
+      } @else if $power >= 1000 {
+        font-size: 35px;
+
+        @include smaller($mobile-threshold) {
+          font-size: 15px;
+        }
+      }
+    }
+
+    $exponent: $exponent + 1;
+  }
+
+  // Super tiles (above 2048)
+  &.tf-tile--super .tf-tile__inner {
+    color: $bright-text-color;
+    background: mix(#333, $tile-gold-color, 95%);
+
+    font-size: 30px;
+
+    @include smaller($mobile-threshold) {
+      font-size: 10px;
+    }
+  }
+}
+
+.tf-tile--still .tf-tile__inner {
+  //animation: none;
+}
+.tf-tile--new .tf-tile__inner {
+  animation: appear $animation-speed ease $transition-speed;
+  animation-fill-mode: backwards;
+}
+.tf-tile--merged .tf-tile__inner {
+  z-index: 20;
+  animation: pop $animation-speed ease $transition-speed;
+  animation-fill-mode: backwards;
+}
+.tf-tile--moved {
+  transition: transform $transition-speed ease-in-out;
+}
+.tf-tile--dead {
+  display: none;
+}
